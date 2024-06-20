@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.11.0'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: NODE_ENV=production gulp buildForDeploy
+
+      - name: Copy index.html to build directory
+        run: cp index.html build/
+
+      - name: Update main.css path in index.html
+        run: sed -i 's|href="build/css/main.css"|href="css/main.css"|' build/index.html
+
+      - name: Update fontawesome.css path in index.html
+        run: sed -i 's|href="build/css/fontawesome.css"|href="css/fontawesome.css"|' build/index.html
+
+      - name: Update normalize path in index.html
+        run: sed -i 's|href="build/css/normalize.css"|href="css/normalize.css"|' build/index.html
+
+      - name: Update script paths in index.html
+        run: sed -i 's|src="build/js/|src="js/|' build/index.html
+
+      - name: Update imgs path in index.html
+        run: sed -i 's|src="build/img/|src="img/|' build/index.html
+
+      - name: Update source/img path in index.html
+        run: sed -i 's|srcset="build/img/|srcset="img/|' build/index.html
+
+      - name: Deploy to gh-pages branch
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f build && git commit -m 'Deploy to gh-pages'
+          git subtree split --prefix build -b gh-pages
+          git push --force "https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git" gh-pages:gh-pages

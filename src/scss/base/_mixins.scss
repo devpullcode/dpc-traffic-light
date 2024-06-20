@@ -1,0 +1,334 @@
+@use 'variables' as v;
+@use 'functions' as f;
+
+/* ========== font-sizes ========== */
+@mixin apply-font-style($name) {
+  $found: false;
+
+  @each $key, $font-names in v.$font-key-names {
+    @if index(map-get(v.$font-key-names, $key), $name) {
+      $found: true;
+
+      $calculated-size: calc(#{v.$base-font-size} * #{pow(v.$ratio, map-get(v.$font-sizes, $key))});
+      $font-size: v.$base-font-size * pow(v.$ratio, map-get(v.$font-sizes, $key));
+      font-size: $calculated-size;
+
+      @if $name == 'title' {
+        letter-spacing: -0.02em;
+        line-height: $font-size * 1.2;
+        font-weight: map-get(v.$font-weight, black);
+        margin-bottom: 12px;
+        color: var(--text-title);
+      }
+      @if $name == 'subtitle' {
+        letter-spacing: 0.05em;
+        line-height: $font-size * 1;
+        font-weight: map-get(v.$font-weight, light);
+        margin-bottom: $font-size * 1.4;
+        color: var(--text-subtitle);
+      }
+      @if $name == 'paragraph' {
+        letter-spacing: 0.02em;
+        line-height: 1.7;
+        font-weight: map-get(v.$font-weight, regular);
+        margin-bottom: $font-size * 1;
+        color: var(--text-paragraph);
+      }
+      @if $name == 'caption' {
+        letter-spacing: 0.02em;
+        line-height: $font-size * 1;
+        font-weight: map-get(v.$font-weight, medium);
+        color: var(--text-caption);
+      }
+      @if $name == 'minor' {
+        letter-spacing: 0.02em;
+        line-height: $font-size * 1;
+        font-weight: map-get(v.$font-weight, light);
+        color: var(--text-minor);
+      }
+      @if $name == 'highlight' {
+        letter-spacing: 0.02em;
+        line-height: $font-size * 1;
+        font-weight: map-get(v.$font-weight, medium);
+        color: var(--text-highlight);
+      }
+      @if $name == 'notification-badge' {
+        letter-spacing: 0.02em;
+        line-height: $font-size * 1;
+        font-weight: map-get(v.$font-weight, medium);
+        color: var(--text-notification-badge);
+      }
+    }
+  }
+
+  @if not $found {
+    @error "Invalid font size name: #{$name}. It must be one of those defined in $font-key-names.";
+  }
+}
+
+/* ========== forms ========== */
+@mixin remove-spin-input() {
+  input[type='number'] {
+    // Estilo para los botones de incremento y decremento en Firefox
+    -moz-appearance: textfield;
+    appearance: textfield;
+
+    // Estilo para los botones de incremento y decremento en WebKit
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+/* ========== Mixins breakpoints ========== */
+@mixin media($breakpoint-name) {
+  @if map-has-key(v.$breakpoint-values, $breakpoint-name) {
+    $breakpoint-value: map-get(v.$breakpoint-values, $breakpoint-name);
+
+    @if v.$media-query-approach == 'mobile-first' {
+      @media (min-width: $breakpoint-value) {
+        @content;
+      }
+    } @else if(v.$media-query-approach == 'desktop-first') {
+      @media (max-width: $breakpoint-value) {
+        @content;
+      }
+    } @else {
+      @warn 'Cannot find approach '#{v.$media-query-approach}' in variable $breakpoint-values.';
+    }
+  } @else {
+    @warn 'Cannot find breakpoint '#{$breakpoint-name}' in variable $breakpoint-values.';
+  }
+}
+
+/* ========== generate map code ========== */
+@mixin generate-utility-map-code-with-breakpoints($name-data, $prefix, $key) {
+  $counter: 1;
+  @each $suffix-opt, $v-opt in map-get(v.$data-maps, $name-data) {
+    $counter-simple-class: 0;
+    @each $suffix-break, $break-point in v.$breakpoint-values {
+      $length-breakpoints: 5;
+
+      @if ($counter-simple-class == 0) {
+        .u-#{$prefix}-#{$suffix-opt} {
+          #{$key}: $v-opt;
+        }
+
+        $counter-simple-class: 1;
+      }
+
+      .u-#{$prefix}-#{$suffix-opt}-gt-#{$suffix-break} {
+        @media (min-width: $break-point) {
+          #{$key}: $v-opt;
+        }
+      }
+      .u-#{$prefix}-#{$suffix-opt}-lt-#{$suffix-break} {
+        @media (max-width: $break-point) {
+          #{$key}: $v-opt;
+        }
+      }
+
+      @if $counter < $length-breakpoints {
+        $next-suffix-break: nth(v.$breakpoint-code-values, ($counter + 1));
+        $next-break-point: map-get(v.$breakpoint-values, $next-suffix-break);
+
+        .u-#{$prefix}-#{$suffix-opt}-#{$suffix-break}-#{$next-suffix-break} {
+          @media (min-width: calc($break-point + 0.0625rem)) and (max-width: $next-break-point) {
+            #{$key}: $v-opt;
+          }
+        }
+      }
+
+      $counter: $counter + 1;
+    }
+
+    $counter: 1;
+  }
+}
+
+@mixin generate-utility-map-code-with-breakpoints-two-keys($name-data, $prefix, $key) {
+  $counter: 1;
+  @each $suffix-opt, $v-opt in map-get(v.$data-maps, $name-data) {
+    $counter-simple-class: 0;
+    @each $suffix-break, $break-point in v.$breakpoint-values {
+      $length-breakpoints: 5;
+
+      @if ($counter-simple-class == 0) {
+        .u-#{$prefix}-#{$suffix-opt} {
+          #{nth($key, 1)}: $v-opt;
+          #{nth($key, 2)}: $v-opt;
+        }
+
+        $counter-simple-class: 1;
+      }
+
+      .u-#{$prefix}-#{$suffix-opt}-gt-#{$suffix-break} {
+        @media (min-width: $break-point) {
+          #{nth($key, 1)}: $v-opt;
+          #{nth($key, 2)}: $v-opt;
+        }
+      }
+      .u-#{$prefix}-#{$suffix-opt}-lt-#{$suffix-break} {
+        @media (max-width: $break-point) {
+          #{nth($key, 1)}: $v-opt;
+          #{nth($key, 2)}: $v-opt;
+        }
+      }
+
+      @if $counter < $length-breakpoints {
+        $next-suffix-break: nth(v.$breakpoint-code-values, ($counter + 1));
+        $next-break-point: map-get(v.$breakpoint-values, $next-suffix-break);
+
+        .u-#{$prefix}-#{$suffix-opt}-#{$suffix-break}-#{$next-suffix-break} {
+          @media (min-width: calc($break-point + 0.0625rem)) and (max-width: $next-break-point) {
+            #{nth($key, 1)}: $v-opt;
+            #{nth($key, 2)}: $v-opt;
+          }
+        }
+      }
+
+      $counter: $counter + 1;
+    }
+
+    $counter: 1;
+  }
+}
+
+/* ========== generate list code ========== */
+@mixin generate-utility-list-code-with-breakpoints($name-data, $prefix, $key) {
+  $counter: 1;
+
+  @each $suffix-opt in map-get(v.$data-maps, $name-data) {
+    $counter-simple-class: 0;
+    @each $suffix-break, $break-point in v.$breakpoint-values {
+      $length-breakpoints: 5;
+
+      @if ($counter-simple-class == 0) {
+        .u-#{$prefix}-#{$suffix-opt} {
+          #{$key}: $suffix-opt;
+        }
+
+        $counter-simple-class: 1;
+      }
+
+      .u-#{$prefix}-#{$suffix-opt}-gt-#{$suffix-break} {
+        @media (min-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+      .u-#{$prefix}-#{$suffix-opt}-lt-#{$suffix-break} {
+        @media (max-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+
+      @if $counter < $length-breakpoints {
+        $next-suffix-break: nth(v.$breakpoint-code-values, ($counter + 1));
+        $next-break-point: map-get(v.$breakpoint-values, $next-suffix-break);
+
+        .u-#{$prefix}-#{$suffix-opt}-#{$suffix-break}-#{$next-suffix-break} {
+          @media (min-width: calc($break-point + 0.0625rem)) and (max-width: $next-break-point) {
+            #{$key}: $suffix-opt;
+          }
+        }
+      }
+
+      $counter: $counter + 1;
+    }
+
+    $counter: 1;
+  }
+}
+/* ========== generate list code no suffix-opt ========== */
+@mixin generate-utility-list-code-with-breakpoints-no-suffix-opt($name-data, $prefix, $key) {
+  $counter: 1;
+
+  @each $suffix-opt in map-get(v.$data-maps, $name-data) {
+    $counter-simple-class: 0;
+    @each $suffix-break, $break-point in v.$breakpoint-values {
+      $length-breakpoints: 5;
+
+      @if ($counter-simple-class == 0) {
+        .u-#{$prefix} {
+          #{$key}: $suffix-opt;
+        }
+
+        $counter-simple-class: 1;
+      }
+
+      .u-#{$prefix}-gt-#{$suffix-break} {
+        @media (min-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+      .u-#{$prefix}-lt-#{$suffix-break} {
+        @media (max-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+
+      @if $counter < $length-breakpoints {
+        $next-suffix-break: nth(v.$breakpoint-code-values, ($counter + 1));
+        $next-break-point: map-get(v.$breakpoint-values, $next-suffix-break);
+
+        .u-#{$prefix}-#{$suffix-break}-#{$next-suffix-break} {
+          @media (min-width: calc($break-point + 0.0625rem)) and (max-width: $next-break-point) {
+            #{$key}: $suffix-opt;
+          }
+        }
+      }
+
+      $counter: $counter + 1;
+    }
+
+    $counter: 1;
+  }
+}
+/* ========== generate list code no prefix ========== */
+@mixin generate-utility-list-code-with-breakpoints-no-prefix($name-data, $key) {
+  $counter: 1;
+
+  @each $suffix-opt in map-get(v.$data-maps, $name-data) {
+    $counter-simple-class: 0;
+    @each $suffix-break, $break-point in v.$breakpoint-values {
+      $length-breakpoints: 5;
+
+      @if ($counter-simple-class == 0) {
+        .u-#{$suffix-opt} {
+          #{$key}: $suffix-opt;
+        }
+
+        $counter-simple-class: 1;
+      }
+
+      .u-#{$suffix-opt}-gt-#{$suffix-break} {
+        @media (min-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+      .u-#{$suffix-opt}-lt-#{$suffix-break} {
+        @media (max-width: $break-point) {
+          #{$key}: $suffix-opt;
+        }
+      }
+
+      @if $counter < $length-breakpoints {
+        $next-suffix-break: nth(v.$breakpoint-code-values, ($counter + 1));
+        $next-break-point: map-get(v.$breakpoint-values, $next-suffix-break);
+
+        .u-#{$suffix-opt}-#{$suffix-break}-#{$next-suffix-break} {
+          @media (min-width: calc($break-point + 0.0625rem)) and (max-width: $next-break-point) {
+            #{$key}: $suffix-opt;
+          }
+        }
+      }
+
+      $counter: $counter + 1;
+    }
+
+    $counter: 1;
+  }
+}

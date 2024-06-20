@@ -1,0 +1,24 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+@use '../base/functions' as f;
+
+/* ========== margin all sides ========== */
+// Generate classes for margin all sides
+@include m.generate-utility-map-code-with-breakpoints('interval-values', 'm', 'margin');
+
+/* ========== padding all sides ========== */
+// Generate classes for padding all sides
+@include m.generate-utility-map-code-with-breakpoints('interval-values', 'p', 'padding');
+
+/* ========== margin specific sides ========== */
+// Generate classes for margin specific sides
+@each $suffix-dir, $v-dir in v.$direction-values {
+  @if str-index($v-dir, ' ') {
+    $dirs: f.str-split($v-dir);
+    @include m.generate-utility-map-code-with-breakpoints-two-keys('interval-values', 'm#{$suffix-dir}', (margin-#{nth($dirs, 1)}, margin-#{nth($dirs, 2)}));
+    @include m.generate-utility-map-code-with-breakpoints-two-keys('interval-values', 'p#{$suffix-dir}', (padding-#{nth($dirs, 1)}, padding-#{nth($dirs, 2)}));
+  } @else {
+    @include m.generate-utility-map-code-with-breakpoints('interval-values', 'm#{$suffix-dir}', 'margin-#{$v-dir}');
+    @include m.generate-utility-map-code-with-breakpoints('interval-values', 'p#{$suffix-dir}', 'padding-#{$v-dir}');
+  }
+}

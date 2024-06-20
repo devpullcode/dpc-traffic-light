@@ -1,0 +1,67 @@
+@use '../base/variables' as v;
+
+/* ========== color icon ========== */
+.icon-light-theme {
+  filter: grayscale(1) brightness(0) invert(1);
+}
+.icon-dark-theme {
+  filter: grayscale(1) brightness(1) invert(1);
+}
+
+/* ========== grid ========== */
+.grid-container {
+  display: grid;
+}
+
+// grid gap
+.grid-gap-10 {
+  gap: 10px;
+}
+.grid-gap-15 {
+  gap: 15px;
+}
+
+// grid column
+.grid-column-1-span {
+  grid-column: 1 / -1;
+}
+.grid-column-1-3 {
+  grid-column: 1 / 3;
+}
+.grid-column-1-11 {
+  grid-column: 1 / 11;
+}
+
+// grid-template
+.grid-template--1-auto-cols {
+  grid-template-columns: repeat(1, 1fr) auto;
+}
+.grid-template--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid-template--70-auto-cols {
+  grid-template-columns: repeat(1, 70px) auto;
+}
+.grid-template--100-auto-cols {
+  grid-template-columns: repeat(1, 95px) auto;
+}
+// .grid-template--1-1auto-cols {
+//   grid-template-columns: repeat(1, 1fr) auto;
+// }
+// .grid-template--50-50-cols {
+//   grid-template-columns: repeat(2, 1fr);
+// }
+
+/* ========== wave ========== */
+.u-wave {
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 11rem;
+    background: url(../img/.svg) no-repeat;
+  }
+}

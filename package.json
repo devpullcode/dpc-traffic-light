@@ -1,0 +1,37 @@
+{
+  "name": "dpc-portafolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jose Antonio González Santos",
+  "license": "ISC",
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0",
+    "autoprefixer": "^10.4.19",
+    "cssnano": "^7.0.4",
+    "gulp": "^4.0.2",
+    "gulp-append-prepend": "^1.0.9",
+    "gulp-avif": "^1.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^3.0.0",
+    "gulp-imagemin": "^9.1.0",
+    "gulp-postcss": "^10.0.0",
+    "gulp-purgecss": "^6.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-strip-comments": "^2.6.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-webp": "^5.0.0",
+    "sass": "^1.77.8"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "normalize.css": "^8.0.1"
+  }
+}

@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* ======================================== */
+/*       media query approach variable      */
+/* ======================================== */
+$media-query-approach: 'mobile-first';
+
+/* ======================================== */
+/*             color variables              */
+/* ======================================== */
+
+/* ======================================== */
+/*                  fonts                   */
+/* ======================================== */
+
+:root {
+  --font-size-document: 16px;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --font-size-document: 18px;
+  }
+}
+
+$base-font-size: 1rem;
+$ratio: 1.4; // typographic reason
+
+$font-sizes: (
+  xs: -3,
+  sm: -2,
+  md: -1,
+  base: 0,
+  lg: 1,
+  xl: 2,
+  xxl: 3,
+);
+
+$font-key-names: (
+  xl: (
+    title,
+  ),
+  lg: (
+    subtitle,
+    highlight,
+  ),
+  base: (
+    paragraph,
+  ),
+  md: (
+    caption,
+    minor,
+    notification-badge,
+  ),
+);
+
+$font-weight: (
+  thin: 100,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  bold: 700,
+  black: 900,
+);
+
+/* ======================================== */
+/*                  others                  */
+/* ======================================== */
+$visibility-values: hidden, visible, collapse;
+$display-values: block, inline, inline-block;
+$overflow-values: auto, hidden, scroll;
+$position-values: static, relative, absolute, fixed, sticky;
+$hidden-values: none;
+
+/* ======================================== */
+/*                  flex                    */
+/* ======================================== */
+$flex: (flex);
+$flex-direction: (row, column);
+$justify-content: (flex-start, center, flex-end, space-between, space-around, space-evenly);
+$align-items: (flex-start, center, flex-end, baseline, stretch);
+$align-content: (flex-start, center, flex-end, space-between, space-around, space-evenly, stretch);
+$flex-wrap: (wrap, nowrap, wrap-reverse);
+
+/* ======================================== */
+/*                   align                  */
+/* ======================================== */
+$align-txt-values: (left, center, right, justify);
+
+/* ======================================== */
+/*                breakpoint                */
+/* ======================================== */
+$breakpoint-code-values: (sm, md, lg, xl, xxl);
+
+$breakpoint-values: (
+  'sm': 36rem,
+  // Mobile devices in portrait mode
+  'md': 48rem,
+  // Tablets in portrait and landscape mode
+  'lg': 62rem,
+  // Common desktop monitors and laptops
+  'xl': 75rem,
+  // Large standard desktop monitors
+  'xxl': 87.5rem,
+  // Big monitors, high resolution screens
+);
+
+/* ======================================== */
+/*                 spacing                  */
+/* ======================================== */
+$interval-values: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem,
+  7: 2.5rem,
+  8: 3rem,
+  9: 3.5rem,
+  10: 4rem,
+  11: 4.5rem,
+  12: 5rem,
+);
+
+/* ======================================== */
+/*                direction                 */
+/* ======================================== */
+$direction-values: (
+  't': 'top',
+  'r': 'right',
+  'b': 'bottom',
+  'l': 'left',
+  'x': 'left right',
+  'y': 'top bottom',
+);
+
+/* ======================================== */
+/*                 opacity                  */
+/* ======================================== */
+// prettier-ignore
+$opacity-values: (
+  '0': 0,       // 0%   - completely transparent
+  '10': 0.1,    // 10%
+  '20': 0.2,    // 20%
+  '30': 0.3,    // 30%
+  '40': 0.4,    // 40%
+  '50': 0.5,    // 50%  - semi transparent
+  '60': 0.6,    // 60%
+  '70': 0.7,    // 70%
+  '80': 0.8,    // 80%
+  '90': 0.9,    // 90%
+  '100': 1      // 100% - completely opaque
+);
+
+$data-maps: (
+  flex: $flex,
+  flex-direction: $flex-direction,
+  justify-content: $justify-content,
+  font-weight: $font-weight,
+  align-items: $align-items,
+  align-content: $align-content,
+  flex-wrap: $flex-wrap,
+  align-txt-values: $align-txt-values,
+  breakpoint-code-values: $breakpoint-code-values,
+  breakpoint-values: $breakpoint-values,
+  interval-values: $interval-values,
+  direction-values: $direction-values,
+  opacity-values: $opacity-values,
+  visibility-values: $visibility-values,
+  display-values: $display-values,
+  overflow-values: $overflow-values,
+  position-values: $position-values,
+  hidden-values: $hidden-values,
+);

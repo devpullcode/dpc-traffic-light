@@ -1,0 +1,5 @@
+@use '../base/mixins' as m;
+@use '../base/functions' as f;
+
+/* ========== text align ========== */
+@include m.generate-utility-list-code-with-breakpoints('align-txt-values', 'txt', 'text-align');
