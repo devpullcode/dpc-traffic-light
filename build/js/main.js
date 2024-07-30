@@ -1,0 +1,1 @@
+let switchDisableBtn=(e,o)=>{o.forEach(o=>{o=document.querySelectorAll("."+o);console.log(o),e&&o.forEach(o=>o.classList.add("no-hover")),e||o.forEach(o=>o.classList.remove("no-hover"))})};window.addEventListener("load",()=>{0<navigator.maxTouchPoints&&switchDisableBtn(!0,["m-contact__item-value","m-profile-links__link"])});

@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.11.0'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
@@ -27,23 +27,14 @@ jobs:
       - name: Copy index.html to build directory
         run: cp index.html build/
 
-      - name: Update main.css path in index.html
-        run: sed -i 's|href="build/css/main.css"|href="css/main.css"|' build/index.html
-
-      - name: Update fontawesome.css path in index.html
-        run: sed -i 's|href="build/css/fontawesome.css"|href="css/fontawesome.css"|' build/index.html
-
-      - name: Update normalize path in index.html
-        run: sed -i 's|href="build/css/normalize.css"|href="css/normalize.css"|' build/index.html
-
-      - name: Update script paths in index.html
-        run: sed -i 's|src="build/js/|src="js/|' build/index.html
-
-      - name: Update imgs path in index.html
-        run: sed -i 's|src="build/img/|src="img/|' build/index.html
-
-      - name: Update source/img path in index.html
-        run: sed -i 's|srcset="build/img/|srcset="img/|' build/index.html
+      - name: Update paths in index.html
+        run: |
+          sed -i 's|href="build/css/main.css"|href="css/main.css"|' build/index.html
+          sed -i 's|href="build/css/fontawesome.css"|href="css/fontawesome.css"|' build/index.html
+          sed -i 's|href="build/css/normalize.css"|href="css/normalize.css"|' build/index.html
+          sed -i 's|src="build/js/|src="js/|' build/index.html
+          sed -i 's|src="build/img/|src="img/|' build/index.html
+          sed -i 's|srcset="build/img/|srcset="img/|' build/index.html
 
       - name: Deploy to gh-pages branch
         env:
@@ -51,6 +42,18 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add -f build && git commit -m 'Deploy to gh-pages'
-          git subtree split --prefix build -b gh-pages
-          git push --force "https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git" gh-pages:gh-pages
+
+          # Clonar el repositorio y crear la rama gh-pages si no existe
+          git clone "https://x-access-token:${{ secrets.GH_PAT }}@github.com/devpullcode/dpc-traffic-light.git"
+          cd dpc-traffic-light
+          git checkout gh-pages || git checkout --orphan gh-pages
+
+          # Sincronizar el contenido del directorio build con la rama gh-pages
+          rsync -av --delete ../build/ ./
+
+          # Agregar y hacer commit de los cambios
+          git add --all
+          git commit -m 'Deploy to gh-pages'
+
+          # Empujar los cambios a la rama gh-pages
+          git push "https://x-access-token:${{ secrets.GH_PAT }}@github.com/devpullcode/dpc-traffic-light.git" gh-pages
