@@ -27,7 +27,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 /* ========== CSS ========== */
 const compilerCSS = () => {
   return gulp
-    .src('src/scss/main.scss')
+    .src('src/scss/main.scss', { allowEmpty: true })
     .pipe(gulpIf(!isProduction, sourcemaps.init()))
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss([autoprefixer(), cssnano()]))
