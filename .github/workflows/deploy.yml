@@ -37,12 +37,14 @@ jobs:
 
       - name: Update paths in index.html
         run: |
-          sed -i 's|href="build/css/main.css"|href="css/main.css"|' build/index.html
-          sed -i 's|href="build/css/fontawesome.css"|href="css/fontawesome.css"|' build/index.html
-          sed -i 's|href="build/css/normalize.css"|href="css/normalize.css"|' build/index.html
-          sed -i 's|src="build/js/|src="js/|' build/index.html
-          sed -i 's|src="build/img/|src="img/|' build/index.html
-          sed -i 's|srcset="build/img/|srcset="img/|' build/index.html
+          if [ -f build/index.html ]; then
+            sed -i 's|href="build/css/main.css"|href="css/main.css"|' build/index.html
+            sed -i 's|href="build/css/fontawesome.css"|href="css/fontawesome.css"|' build/index.html
+            sed -i 's|href="build/css/normalize.css"|href="css/normalize.css"|' build/index.html
+            sed -i 's|src="build/js/|src="js/|' build/index.html
+            sed -i 's|src="build/img/|src="img/|' build/index.html
+            sed -i 's|srcset="build/img/|srcset="img/|' build/index.html
+          fi
 
       - name: Upload to GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
