@@ -1,0 +1,58 @@
+#!/bin/sh
+
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Current PATH: $PATH"
+/usr/local/bin/npx lint-staged
+
+# Ejecuta lint-staged
+npx lint-staged
+
+# Obtén la lista de archivos en staged que han sido añadidos, copiados, modificados o renombrados
+staged_files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+formatted_files=""
+max_length=0
+
+# Encontrar la longitud del nombre de archivo más largo
+for file in $staged_files; do
+    if [ ${#file} -gt $max_length ]; then
+        max_length=${#file}
+    fi
+done
+
+# # Itera sobre cada archivo en staged
+# for file in $staged_files; do
+#     # Verifica si el archivo necesita formateo comparando su versión formateada con la actual
+#     if ! prettier --check "$file" --ignore-unknown >/dev/null 2>&1; then
+#         prettier --write "$file" --ignore-unknown
+#         formatted_files="$formatted_files $file"
+#     fi
+# done
+
+# echo "$formatted_files"
+
+# # Muestra los archivos que fueron formateados
+# if [ -n "$formatted_files" ]; then
+#     echo "Archivos formateados por Prettier:"
+
+#     for file in $formatted_files; do
+#         spaces=$(($max_length - ${#file}))
+
+#         printf "👾 %s%${spaces}s ( prettier )\n" "$file"
+#     done
+# fi
+
+# echo
+
+# Muestra los archivos que están en el staged
+echo "Los siguientes archivos se encuentran en el staged:"
+for file in $staged_files; do
+    spaces=$(($max_length - ${#file}))
+
+    printf "🥑 %s%${spaces}s ( staged )\n" "$file"
+done
+
+# Actualiza el índice de Git solo si hubo archivos formateados
+# if [ -n "$formatted_files" ]; then
+#     git update-index --again
+# fi
