@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# macOS specific files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Build outputs
+build/
+dist/
+out/
+target/
+
+# Temporary files
+tmp/
+*.tmp
+
+# Log files
+logs/
+*.log
