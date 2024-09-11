@@ -1,0 +1,38 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+/* ========== hidden ========== */
+@include m.generate-utility-list-code-with-breakpoints-no-suffix-opt('hidden-values', 'is-hidden', 'display');
+
+/* ========== position ========== */
+@include m.generate-utility-list-code-with-breakpoints('position-values', 'position', 'position');
+
+/* ========== overflow ========== */
+@include m.generate-utility-list-code-with-breakpoints('overflow-values', 'overflow', 'overflow');
+
+/* ========== opacity ========== */
+@include m.generate-utility-map-code-with-breakpoints('opacity-values', 'opacity', 'opacity');
+
+/* ========== visibility ========== */
+@include m.generate-utility-list-code-with-breakpoints('visibility-values', 'is-visibility', 'visibility');
+
+/* ========== display ========== */
+@include m.generate-utility-list-code-with-breakpoints('display-values', 'd', 'display');
+
+/* ========== others ========== */
+.u-not-select {
+  user-select: none;
+}
+.u-cursor-default {
+  cursor: default;
+}
+
+/* ========== scrollbar ========== */
+.u-not-scrollbar::-webkit-scrollbar {
+  display: none; /* Oculta la barra de desplazamiento en Chrome, Safari y Edge */
+}
+
+.u-not-scrollbar {
+  -ms-overflow-style: none; /* Oculta la barra de desplazamiento en IE y Edge */
+  scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+}

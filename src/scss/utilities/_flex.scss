@@ -1,0 +1,34 @@
+@use '../base/mixins' as m;
+
+/* ========== flex ========== */
+@include m.generate-utility-list-code-with-breakpoints-no-suffix-opt('flex', 'flex', 'display');
+/* ========== flex direction ========== */
+@include m.generate-utility-list-code-with-breakpoints('flex-direction', 'flex', 'flex-direction');
+
+/* ========== justify content ========== */
+@include m.generate-utility-list-code-with-breakpoints('justify-content', 'jc', 'justify-content');
+/* ========== align items ========== */
+@include m.generate-utility-list-code-with-breakpoints('align-items', 'ai', 'align-items');
+
+/* ========== align content ========== */
+@include m.generate-utility-list-code-with-breakpoints('align-content', 'ac', 'align-content');
+
+/* ========== wrapping ========== */
+@include m.generate-utility-list-code-with-breakpoints-no-prefix('flex-wrap', 'flex-wrap');
+
+/* ========== gap ========== */
+@include m.generate-utility-map-code-with-breakpoints('interval-values', 'gap', 'gap');
+
+/* ========== others ========== */
+.u-flex-1 {
+  flex: 1;
+}
+.flex-double {
+  flex: 2;
+}
+.flex-no-shrink {
+  flex: 1 0 auto;
+}
+.flex-shrink-only {
+  flex: 0 1 auto;
+}

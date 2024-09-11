@@ -1,0 +1,28 @@
+@function str-split($string, $delimiter: ' ') {
+  $output: ();
+  $last-index: 1;
+
+  @for $i from 1 through str-length($string) {
+    @if str-slice($string, $i, $i) == $delimiter {
+      $output: append($output, str-slice($string, $last-index, $i - 1));
+      $last-index: $i + 1;
+    }
+  }
+
+  $output: append($output, str-slice($string, $last-index, str-length($string)));
+  @return $output;
+}
+
+// @function pow($base, $exponent) {
+//   $result: 1;
+//   @if $exponent > 0 {
+//     @for $i from 1 through $exponent {
+//       $result: $result * $base;
+//     }
+//   } @else if $exponent < 0 {
+//     @for $i from 1 through -$exponent {
+//       $result: $result / $base;
+//     }
+//   }
+//   @return $result;
+// }
