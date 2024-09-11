@@ -20,30 +20,6 @@ for file in $staged_files; do
     fi
 done
 
-# # Itera sobre cada archivo en staged
-# for file in $staged_files; do
-#     # Verifica si el archivo necesita formateo comparando su versión formateada con la actual
-#     if ! prettier --check "$file" --ignore-unknown >/dev/null 2>&1; then
-#         prettier --write "$file" --ignore-unknown
-#         formatted_files="$formatted_files $file"
-#     fi
-# done
-
-# echo "$formatted_files"
-
-# # Muestra los archivos que fueron formateados
-# if [ -n "$formatted_files" ]; then
-#     echo "Archivos formateados por Prettier:"
-
-#     for file in $formatted_files; do
-#         spaces=$(($max_length - ${#file}))
-
-#         printf "👾 %s%${spaces}s ( prettier )\n" "$file"
-#     done
-# fi
-
-# echo
-
 # Muestra los archivos que están en el staged
 echo "Los siguientes archivos se encuentran en el staged:"
 for file in $staged_files; do
@@ -51,8 +27,3 @@ for file in $staged_files; do
 
     printf "🥑 %s%${spaces}s ( staged )\n" "$file"
 done
-
-# Actualiza el índice de Git solo si hubo archivos formateados
-# if [ -n "$formatted_files" ]; then
-#     git update-index --again
-# fi
