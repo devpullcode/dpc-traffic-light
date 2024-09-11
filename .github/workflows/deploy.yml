@@ -9,6 +9,8 @@ on:
   push:
     branches:
       - main
+      - version-1
+      - version-2
 
 jobs:
   build:
@@ -54,9 +56,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
+        with:
+          path: ./build
+          destination_dir: ${{ github.ref_name }}
