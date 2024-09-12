@@ -1,11 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dpc-traffic-light</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- ///////////////////////////// -->
+      <!-- T R A F F I C  L I G H T -->
+      <!-- ///////////////////////////// -->
+      <div class="traffic-light">
+        <!-- head -->
+        <div class="traffic-light__head">
+          <!-- block -->
+          <div class="traffic-light__light-block">
+            <div class="traffic-light__light traffic-light__light--red"></div>
+          </div>
 
-</body>
+          <!-- block -->
+          <div class="traffic-light__light-block">
+            <div class="traffic-light__light traffic-light__light--yellow"></div>
+          </div>
+
+          <!-- block -->
+          <div class="traffic-light__light-block">
+            <div class="traffic-light__light traffic-light__light--green"></div>
+          </div>
+        </div>
+
+        <div class="traffic-light__pole"></div>
+
+        <div class="traffic-light__base"></div>
+      </div>
+
+      <!-- ///////////////////////////// -->
+      <!-- C O N T R O L  P A N E L -->
+      <!-- ///////////////////////////// -->
+      <div class="control-panel">
+        <div class="control-panel__actuators">
+          <div class="control-panel__btn control-panel__btn--red">r</div>
+          <div class="control-panel__btn control-panel__btn--yellow">a</div>
+          <div class="control-panel__btn control-panel__btn--green">v</div>
+        </div>
+        <div class="control-panel__actuator-auto">auto</div>
+        <div class="control-panel__base"></div>
+      </div>
+    </div>
+  </body>
 </html>
