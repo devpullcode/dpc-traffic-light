@@ -14,12 +14,19 @@ $media-query-approach: 'mobile-first';
 /* ======================================== */
 
 :root {
-  --font-size-document: 16px;
+  --font-size-document: 14px;
+  --page-bg: #e5f1ef;
+}
+
+@media (max-width: 30rem) {
+  :root {
+    --font-size-document: 10px;
+  }
 }
 
 @media (min-width: 48rem) {
   :root {
-    --font-size-document: 18px;
+    --font-size-document: 16px;
   }
 }
 
