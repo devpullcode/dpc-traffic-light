@@ -1,4 +1,7 @@
 .wrapper {
   width: 600px;
-  background-color: #e5f1ef;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 3.125rem;
 }
