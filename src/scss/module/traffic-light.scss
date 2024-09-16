@@ -1,0 +1,80 @@
+.traffic-light {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.traffic-light__head {
+  width: 6.25rem;
+  height: 16.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  border-radius: 1.25rem;
+  background-color: #333333;
+}
+
+/* bloque luz */
+
+.traffic-light__light-block {
+  width: 3.75rem;
+  height: 3.75rem;
+
+  border-top: 4px solid #5c5c5c;
+  border-radius: 1.25rem;
+  background-color: #3f3f3f;
+  box-shadow: inset 0px 3px 3px -2px rgb(51, 51, 51);
+  box-shadow: inset 0px 3px 15px -5px rgb(0, 0, 0);
+  overflow: hidden;
+}
+
+.traffic-light__light {
+  height: 100%;
+  transition: 0.3s;
+}
+
+.traffic-light__light--red {
+  background-color: hsl(0, 100%, 50%);
+  box-shadow: inset 0px 3px 12px -3px hsl(0, 100%, 0%);
+  opacity: 0;
+}
+
+.traffic-light__light--yellow {
+  background-color: hsl(60, 100%, 50%);
+  box-shadow: inset 0px 3px 12px -5px hsl(60, 100%, 0%);
+  opacity: 0;
+}
+
+.traffic-light__light--green {
+  background-color: hsl(120, 100%, 50%);
+  box-shadow: inset 0px 3px 12px -5px hsl(120, 100%, 0%);
+  opacity: 0;
+}
+
+.traffic-light__light--on {
+  opacity: 1;
+}
+
+/* poste */
+.traffic-light__pole {
+  width: 3.125rem;
+  height: 21.875rem;
+
+  background-color: #333333;
+  box-shadow:
+    inset 0px 3px 15px -5px rgb(0, 0, 0),
+    inset 0px -10px 15px -5px #404040;
+}
+
+/* pie */
+.traffic-light__base {
+  width: 6.25rem;
+  height: 3.125rem;
+
+  border-radius: 1.25rem 1.25rem 0 0;
+  background-color: #2b2b2b;
+}
