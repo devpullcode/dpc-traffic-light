@@ -1,7 +1,7 @@
 const switchDisableBtn = (status, classElements) => {
   classElements.forEach(classElement => {
     const elements = document.querySelectorAll(`.${classElement}`);
-        console.log(elements);
+        console.log(elements)
     if (status) {
       elements.forEach(element => element.classList.add('no-hover'));
     }
